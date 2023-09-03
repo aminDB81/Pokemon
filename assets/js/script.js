@@ -12,24 +12,30 @@ const playerImage = new Image();
 playerImage.src = "assets/img/playerDown.png"
 
 class Sprite {
-    constructor({position,velocity}){
+    constructor({position,velocity,image}){
         this.position = position;
+        this.image = image;
     }
 
-    
+    draw() {
+        c.drawImage(this.image, -400, -500)
+    }
 }
 
 const background = new Sprite({position : {
     x : -400,
     y : -500
-}})
+},
+image : image
+
+})
 
 
 
 // Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
-    c.drawImage(image, -400, -500)
+    background.draw();
     c.drawImage(playerImage,
         0,
         0,
