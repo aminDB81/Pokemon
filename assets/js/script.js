@@ -2,8 +2,23 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 canvas.width = 1120;
 canvas.height = 576
-c.fillStyle = "white"
-c.fillRect(0, 0, canvas.width, canvas.height)
+
+const collisionMap = [];
+ for (let i = 0; i < collision.length; i+=70) {
+    collisionMap.push(collision.slice(i , 70 + i))        
+ }
+
+ class Boundary {
+    constructor({position}) {
+        this.position = position;
+        this.widt = 64;
+        this.height = 64;
+    }
+    draw() {
+        c.fillRect(this.position.x , this.position.y , this.widt , this.height)
+    }
+ }
+
 // c.drawImage("assets/img/Pokemon style game.png")
 const image = new Image();
 image.src = "assets/img/Pokemon style game.png"
