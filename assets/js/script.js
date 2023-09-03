@@ -11,8 +11,24 @@ image.src = "assets/img/Pokemon style game.png"
 const playerImage = new Image();
 playerImage.src = "assets/img/playerDown.png"
 
+class Sprite {
+    constructor({position,velocity}){
+        this.position = position;
+    }
+
+    
+}
+
+const background = new Sprite({position : {
+    x : -400,
+    y : -500
+}})
+
+
+
 // Specifying the width, height and position of the character
-image.onload = () => {
+function animate() {
+    window.requestAnimationFrame(animate)
     c.drawImage(image, -400, -500)
     c.drawImage(playerImage,
         0,
@@ -23,6 +39,7 @@ image.onload = () => {
         playerImage.width / 4,
         playerImage.height,);
 }
+animate()
 
 //  Specifying specific keys for character movement
 window.addEventListener("keydown", (e) => {
