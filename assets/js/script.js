@@ -24,5 +24,22 @@ image.onload = () => {
         playerImage.height,);
 }
 
-
+//  Specifying specific keys for character movement
+window.addEventListener("keydown", (e) => {
+    switch (e.key) {
+        case "w":
+            console.log("w key was pressed");
+            break
+        case "a":
+            console.log("a key was pressed");
+            break
+        case "s":
+            console.log("s key was pressed");
+            break
+        case "d":
+            console.log("d key was pressed");
+            break
+    }
+}
+)
 
