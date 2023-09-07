@@ -114,32 +114,34 @@ const keys = {
     },
 }
 
-const TestBoundary = new Boundary({
-    position: {
-        x: 500,
-        y: 500
-    }
-})
 
-const movables = [background, TestBoundary]
+const movables = [background, ...boundaries]
+
+function rectangularCollision({ rectangle1, rectangle2 }) {
+    return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x
+        && rectangle1.position.x <= rectangle2.position.x + rectangle2.width
+        && rectangle1.position.y <= rectangle2.position.y + rectangle2.height
+        && rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
+}
 // Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw();
-    // boundaries.forEach(boundary => {
-    //     boundary.draw()
-    // })
-    TestBoundary.draw()
+    boundaries.forEach(boundary => {
+        boundary.draw()
+
+        if (rectangularCollision({
+            rectangle1: player,
+            rectangle2: boundary
+        })) {
+            console.log('closing');
+    
+        }
+    })
+    
     player.draw()
 
 
-    if (player.position.x + player.width >= TestBoundary.position.x 
-        && player.position.x <= TestBoundary.position.x + TestBoundary.width 
-        && player.position.y <= TestBoundary.position.y + TestBoundary.height
-        && player.position.y + player.height >= TestBoundary.position.y ) {
-        console.log('closing');
-
-    }
 
     if (keys.w.pressed && lastKey === "w") {
         movables.forEach(movables => {
