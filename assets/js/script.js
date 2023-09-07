@@ -2,7 +2,48 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 canvas.width = 1120;
 canvas.height = 576
-c.fillStyle = "white"
+const collisionMap = []
+for (let i = 0; i < collision.length; i += 70) {
+    collisionMap.push(collision.slice(i, 70 + i))
+}
+
+
+class Boundary {
+    static width = 64
+    static height = 64
+    constructor({ position }) {
+        this.position = position
+        this.width = 64
+        this.height = 64
+    }
+    draw() {
+        c.fillStyle = "red"
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const boundaries = []
+const offset = {
+    x: -445,
+    y: -525
+}
+collisionMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 913)
+            boundaries.push(new Boundary({
+                position: {
+                    x: j * Boundary.width + offset.x,
+                    y: i * Boundary.height + offset.y
+                }
+            }))
+
+    });
+
+});
+console.log(boundaries);
+
+
+
 c.fillRect(0, 0, canvas.width, canvas.height)
 // c.drawImage("assets/img/Pokemon style game.png")
 const image = new Image();
@@ -12,22 +53,49 @@ const playerImage = new Image();
 playerImage.src = "assets/img/playerDown.png"
 
 class Sprite {
-    constructor({ position, velocity, image }) {
+    constructor({ position, velocity, image, frames = { max: 1 } }) {
         this.position = position;
         this.image = image;
+        this.frames = frames;
+        this.image.onload = () => {
+            this.width = this.image.width / this.frames.max
+            this.height = this.image.height;
+            console.log(this.width);
+            console.log(this.height);
+        }
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y)
+        // c.drawImage(this.image, this.position.x, this.position.y) 
+        c.drawImage(this.image,
+            0,
+            0,
+            this.image.width / this.frames.max,
+            this.image.height,
+            this.position.x,
+            this.position.y,
+            this.image.width / this.frames.max,
+            this.image.height,)
     }
 }
 
+const player = new Sprite({
+    position: {
+        x: 428,
+        y: 350
+    },
+    image: playerImage,
+    frames: {
+        max: 4
+    }
+})
+
 const background = new Sprite({
     position: {
-        x: -400,
-        y: -500
+        x: offset.x,
+        y: offset.y
     },
-    image: image
+    image: image,
 
 });
 
@@ -46,28 +114,49 @@ const keys = {
     },
 }
 
+const TestBoundary = new Boundary({
+    position: {
+        x: 500,
+        y: 500
+    }
+})
 
-
+const movables = [background, TestBoundary]
 // Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw();
-    c.drawImage(playerImage,
-        0,
-        0,
-        playerImage.width / 4,
-        playerImage.height,
-        428, 350,
-        playerImage.width / 4,
-        playerImage.height,);
+    // boundaries.forEach(boundary => {
+    //     boundary.draw()
+    // })
+    TestBoundary.draw()
+    player.draw()
+
+
+    if (player.position.x + player.width >= TestBoundary.position.x 
+        && player.position.x <= TestBoundary.position.x + TestBoundary.width 
+        && player.position.y <= TestBoundary.position.y + TestBoundary.height
+        && player.position.y + player.height >= TestBoundary.position.y ) {
+        console.log('closing');
+
+    }
+
     if (keys.w.pressed && lastKey === "w") {
-        background.position.y = background.position.y += 4
+        movables.forEach(movables => {
+            movables.position.y += 4
+        })
     } else if (keys.a.pressed && lastKey === "a") {
-        background.position.x = background.position.x += 4
+        movables.forEach(movables => {
+            movables.position.x += 4
+        })
     } else if (keys.s.pressed && lastKey === "s") {
-        background.position.y = background.position.y -= 4
+        movables.forEach(movables => {
+            movables.position.y -= 4
+        })
     } else if (keys.d.pressed && lastKey === "d") {
-        background.position.x = background.position.x -= 4
+        movables.forEach(movables => {
+            movables.position.x -= 4
+        })
     }
 }
 animate()
