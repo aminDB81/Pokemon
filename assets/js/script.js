@@ -2,40 +2,8 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 canvas.width = 1120;
 canvas.height = 576
-
-const collisionMap = [];
-for (let i = 0; i < collision.length; i += 70) {
-    collisionMap.push(collision.slice(i, 70 + i))
-}
-
-class Boundary {
-    static width = 64;
-    static height = 64;
-    constructor({ position }) {
-        this.position = position;
-        this.widt = 64;
-        this.height = 64;
-    }
-    draw() {
-        c.fillStyle = "red"
-        c.fillRect(this.position.x, this.position.y, this.widt, this.height)
-    }
-}
-
-const Boundaries = []
-collisionMap.forEach((row, i) => {
-    row.forEach((Symbol, j) => {
-        // console.log(Symbol);
-        Boundaries.push(new Boundary({
-            position: {
-                x: i * Boundary.width,
-                y: j * Boundary.height
-            }
-        })
-        )
-    })
-})
-
+c.fillStyle = "white"
+c.fillRect(0, 0, canvas.width, canvas.height)
 // c.drawImage("assets/img/Pokemon style game.png")
 const image = new Image();
 image.src = "assets/img/Pokemon style game.png"
