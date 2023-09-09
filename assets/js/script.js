@@ -3,8 +3,8 @@ const c = canvas.getContext("2d")
 canvas.width = 1120;
 canvas.height = 576
 const collisionMap = []
-for (let i = 0; i < collision.length; i += 70) {
-    collisionMap.push(collision.slice(i, 70 + i))
+for (let i = 0; i < collision.length; i += 140) {
+    collisionMap.push(collision.slice(i, 140 + i))
 }
 
 
@@ -157,9 +157,9 @@ function animate() {
             }
         }
         if (moving)
-        movables.forEach(movables => {
-            movables.position.y += 4
-        })
+            movables.forEach(movables => {
+                movables.position.y += 4
+            })
     } else if (keys.a.pressed && lastKey === "a") {
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -167,7 +167,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: {
                     ...boundary, position: {
-                        x: boundary.position.x+3,
+                        x: boundary.position.x + 3,
                         y: boundary.position.y
                     }
                 }
@@ -179,9 +179,9 @@ function animate() {
             }
         }
         if (moving)
-        movables.forEach(movables => {
-            movables.position.x += 4
-        })
+            movables.forEach(movables => {
+                movables.position.x += 4
+            })
     } else if (keys.s.pressed && lastKey === "s") {
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -201,9 +201,9 @@ function animate() {
             }
         }
         if (moving)
-        movables.forEach(movables => {
-            movables.position.y -= 4
-        })
+            movables.forEach(movables => {
+                movables.position.y -= 4
+            })
     } else if (keys.d.pressed && lastKey === "d") {
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -223,9 +223,9 @@ function animate() {
             }
         }
         if (moving)
-        movables.forEach(movables => {
-            movables.position.x -= 4
-        })
+            movables.forEach(movables => {
+                movables.position.x -= 4
+            })
     }
 }
 animate()
