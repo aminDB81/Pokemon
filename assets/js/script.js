@@ -66,7 +66,6 @@ class Sprite {
     }
 
     draw() {
-        // c.drawImage(this.image, this.position.x, this.position.y) 
         c.drawImage(this.image,
             0,
             0,
@@ -123,7 +122,6 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         && rectangle1.position.y <= rectangle2.position.y + rectangle2.height
         && rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
-// Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw();
@@ -230,7 +228,6 @@ function animate() {
 }
 animate()
 
-//  Specifying specific keys for character movement
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
