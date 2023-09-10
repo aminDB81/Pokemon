@@ -8,19 +8,7 @@ for (let i = 0; i < collision.length; i += 140) {
 }
 
 
-class Boundary {
-    static width = 64
-    static height = 64
-    constructor({ position }) {
-        this.position = position
-        this.width = 64
-        this.height = 64
-    }
-    draw() {
-        c.fillStyle = "rgba(255 , 0 , 0 , 0.2)"
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-}
+
 
 const boundaries = []
 const offset = {
@@ -52,31 +40,6 @@ image.src = "assets/img/Pokemon style game.png"
 const playerImage = new Image();
 playerImage.src = "assets/img/playerDown.png"
 
-class Sprite {
-    constructor({ position, velocity, image, frames = { max: 1 } }) {
-        this.position = position;
-        this.image = image;
-        this.frames = frames;
-        this.image.onload = () => {
-            this.width = this.image.width / this.frames.max
-            this.height = this.image.height;
-            console.log(this.width);
-            console.log(this.height);
-        }
-    }
-
-    draw() {
-        c.drawImage(this.image,
-            0,
-            0,
-            this.image.width / this.frames.max,
-            this.image.height,
-            this.position.x,
-            this.position.y,
-            this.image.width / this.frames.max,
-            this.image.height,)
-    }
-}
 
 const player = new Sprite({
     position: {
@@ -122,6 +85,7 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         && rectangle1.position.y <= rectangle2.position.y + rectangle2.height
         && rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
+// Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw();
@@ -228,6 +192,7 @@ function animate() {
 }
 animate()
 
+//  Specifying specific keys for character movement
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
