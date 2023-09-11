@@ -28,17 +28,24 @@ collisionMap.forEach((row, i) => {
     });
 
 });
-console.log(boundaries);
 
 
 
 c.fillRect(0, 0, canvas.width, canvas.height)
-// c.drawImage("assets/img/Pokemon style game.png")
 const image = new Image();
 image.src = "assets/img/Pokemon style game.png"
 
-const playerImage = new Image();
-playerImage.src = "assets/img/playerDown.png"
+const playerDownImage = new Image();
+playerDownImage.src = "assets/img/playerDown.png"
+
+const playerUpImage = new Image();
+playerUpImage.src = "assets/img/playerUp.png"
+
+const playerLeftImage = new Image();
+playerLeftImage.src = "assets/img/playerLeft.png"
+
+const playerRightImage = new Image();
+playerRightImage.src = "assets/img/playerRight.png"
 
 
 const player = new Sprite({
@@ -46,9 +53,15 @@ const player = new Sprite({
         x: 428,
         y: 350
     },
-    image: playerImage,
+    image: playerDownImage,
     frames: {
         max: 4
+    },
+    sprites: {
+        up: playerUpImage,
+        left: playerLeftImage,
+        down: playerDownImage,
+        right: playerRightImage
     }
 })
 
@@ -101,6 +114,7 @@ function animate() {
     player.moving = false;
     if (keys.w.pressed && lastKey === "w") {
         player.moving = true;
+        player.image = player.sprites.up
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
@@ -124,6 +138,7 @@ function animate() {
             })
     } else if (keys.a.pressed && lastKey === "a") {
         player.moving = true;
+        player.image = player.sprites.left
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
@@ -147,6 +162,7 @@ function animate() {
             })
     } else if (keys.s.pressed && lastKey === "s") {
         player.moving = true;
+        player.image = player.sprites.down;
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
@@ -170,6 +186,7 @@ function animate() {
             })
     } else if (keys.d.pressed && lastKey === "d") {
         player.moving = true;
+        player.image = player.sprites.right
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
             if (rectangularCollision({
