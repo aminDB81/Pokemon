@@ -6,6 +6,7 @@ const collisionMap = []
 for (let i = 0; i < collision.length; i += 140) {
     collisionMap.push(collision.slice(i, 140 + i))
 }
+console.log(gsap);
 
 const battlezonemap = []
 for (let i = 0; i < battlezoneData.length; i += 140) {
@@ -120,6 +121,10 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         && rectangle1.position.y <= rectangle2.position.y + rectangle2.height
         && rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
+
+const battle = {
+    initiated: false
+}
 // Specifying the width, height and position of the character
 function animate() {
     window.requestAnimationFrame(animate)
@@ -134,6 +139,13 @@ function animate() {
     })
 
     player.draw();
+
+    let moving = true
+    player.moving = false;
+    
+    if (battle.initiated) return
+
+
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battlezone.length; i++) {
             const battlezones = battlezone[i];
@@ -143,14 +155,14 @@ function animate() {
                 rectangle2: battlezones
             })
             ) {
-                console.log('battle zone collision');
+                console.log('activate a battle');
+                battlezone.initiated = true;
                 break
             }
         }
     }
 
-    let moving = true
-    player.moving = false;
+
     if (keys.w.pressed && lastKey === "w") {
         player.moving = true;
         player.image = player.sprites.up

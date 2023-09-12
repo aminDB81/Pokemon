@@ -1,6 +1,20 @@
 body {
-  background-color: black;
+  background-color: dimgray;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.BattleZoneDive {
+  background-color: black;
+  position: absolute;
+  width: 1120px;
+  height: 576px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.main {
+  display: inline-block;
+  position: relative;
+  
 }
