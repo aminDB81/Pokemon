@@ -7,6 +7,13 @@ for (let i = 0; i < collision.length; i += 140) {
     collisionMap.push(collision.slice(i, 140 + i))
 }
 
+const battlezonemap = []
+for (let i = 0; i < battlezoneData.length; i += 140) {
+    battlezonemap.push(battlezoneData.slice(i, 140 + i))
+}
+console.log(battlezonemap);
+
+
 
 
 
@@ -29,6 +36,21 @@ collisionMap.forEach((row, i) => {
 
 });
 
+const battlezone = []
+battlezonemap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 913)
+            battlezone.push(new Boundary({
+                position: {
+                    x: j * Boundary.width + offset.x,
+                    y: i * Boundary.height + offset.y
+                }
+            }))
+
+    });
+
+});
+console.log(battlezone);
 
 
 c.fillRect(0, 0, canvas.width, canvas.height)
@@ -90,7 +112,7 @@ const keys = {
 }
 
 
-const movables = [background, ...boundaries]
+const movables = [background, ...boundaries , ...battlezone]
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x
@@ -102,13 +124,31 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
 function animate() {
     window.requestAnimationFrame(animate)
     background.draw();
+    battlezone.forEach(battlezones => {
+        battlezones.draw()
+    })
     boundaries.forEach(boundary => {
         boundary.draw()
 
 
     })
 
-    player.draw()
+    player.draw();
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        for (let i = 0; i < battlezone.length; i++) {
+            const battlezones = battlezone[i];
+
+            if (rectangularCollision({
+                rectangle1: player,
+                rectangle2: battlezones
+            })
+            )
+             {
+                console.log('battle zone collision');
+                break
+            }
+        }
+    }
 
     let moving = true
     player.moving = false;
@@ -156,6 +196,7 @@ function animate() {
                 break
             }
         }
+
         if (moving)
             movables.forEach(movables => {
                 movables.position.x += 4
@@ -180,6 +221,7 @@ function animate() {
                 break
             }
         }
+
         if (moving)
             movables.forEach(movables => {
                 movables.position.y -= 4
