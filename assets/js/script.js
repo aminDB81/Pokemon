@@ -112,7 +112,7 @@ const keys = {
 }
 
 
-const movables = [background, ...boundaries , ...battlezone]
+const movables = [background, ...boundaries, ...battlezone]
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
     return (rectangle1.position.x + rectangle1.width >= rectangle2.position.x
@@ -142,8 +142,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: battlezones
             })
-            )
-             {
+            ) {
                 console.log('battle zone collision');
                 break
             }
