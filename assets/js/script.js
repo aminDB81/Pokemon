@@ -280,7 +280,12 @@ function animate() {
     }
 }
 animate();
-
+ 
+function animateBattle() {
+    window.requestAnimationFrame(animateBattle)
+    console.log('animation battle');
+    
+}
 
 //  Specifying specific keys for character movement
 let lastKey = "";
