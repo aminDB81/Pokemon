@@ -128,7 +128,7 @@ const battle = {
 }
 // Specifying the width, height and position of the character
 function animate() {
-    const animationId =  window.requestAnimationFrame(animate)
+    const animationId = window.requestAnimationFrame(animate)
     background.draw();
     battlezone.forEach(battlezones => {
         battlezones.draw()
@@ -143,7 +143,7 @@ function animate() {
 
     let moving = true
     player.moving = false;
-    
+
     if (battle.initiated) return
 
 
@@ -159,19 +159,25 @@ function animate() {
                 console.log('activate a battle');
                 window.cancelAnimationFrame(animationId);
                 gsap.to("#overLapingDiv", {
-                    opacity : 1 ,
-                    repeat : 3,
-                    yoyo : true, 
-                    duration : 0.4,
-                    onComplete(){
+                    opacity: 1,
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    onComplete() {
                         gsap.to("#overLapingDiv", {
                             opacity: 1,
-                        } )
-                        // active a new animation loop
-                        animateBattle();
+                            onComplete() {
+                                // active a new animation loop
+                                animateBattle();
+                                gsap.to("#overLapingDiv", {
+                                    opacity: 0,
+                                })
+                            }
+                        })
+
                     }
                 })
-                
+
                 battlezone.initiated = true;
                 break
             }
@@ -279,13 +285,25 @@ function animate() {
             })
     }
 }
-animate();
- 
+// animate();
+const BattleBackgroundImage = new Image();
+BattleBackgroundImage.src = "assets/img/BattleBackground.png";
+const BattleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: 0
+    }
+    ,
+    image: BattleBackgroundImage
+})
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
+    BattleBackground.draw();
     console.log('animation battle');
-    
+
 }
+animateBattle()
 
 //  Specifying specific keys for character movement
 let lastKey = "";
