@@ -298,28 +298,30 @@ const BattleBackground = new Sprite({
 })
 const firstbosImage = new Image();
 firstbosImage.src = "assets/img/Idle.png";
-const firsrboss = new Sprite({position : {
-    x : 725 ,
-    y : 150
-},
-image: firstbosImage ,
-frames : {
-    max: 5
-},
-animate : true
+const firsrboss = new Sprite({
+    position: {
+        x: 700,
+        y: 150
+    },
+    image: firstbosImage,
+    frames: {
+        max: 5
+    },
+    animate: true
 });
 
 const championImage = new Image();
 championImage.src = "assets/img/embySprite.png";
-const champion = new Sprite({position : {
-    x : 325 ,
-    y : 360
-},
-image: championImage ,
-frames : {
-    max: 4
-},
-animate : true
+const champion = new Sprite({
+    position: {
+        x: 325,
+        y: 360
+    },
+    image: championImage,
+    frames: {
+        max: 4
+    },
+    animate: true
 });
 
 function animateBattle() {
@@ -332,6 +334,18 @@ function animateBattle() {
 }
 animateBattle()
 
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+        champion.attack({
+            attack: {
+                // names: Tackle,
+                // damage: 10,
+                // type: normal
+            },
+            recipient : firsrboss
+        })
+    })
+})
 //  Specifying specific keys for character movement
 let lastKey = "";
 window.addEventListener("keydown", (e) => {

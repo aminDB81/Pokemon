@@ -81,7 +81,6 @@ div h1 {
   position: absolute;
   border: 3px solid black;
   border-radius: 10px;
-  
   width: 200px;
   height: 70px;
 }
@@ -96,7 +95,13 @@ h3 {
   background-color: gray;
 
 }
-.helth-bar div {
+.enemy-helth  {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  background-color: #27ae60;
+}
+.champion-helth  {
   position: absolute;
   width: 100%;
   height: 5px;
