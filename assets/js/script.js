@@ -307,7 +307,8 @@ const firsrboss = new Sprite({
     frames: {
         max: 5
     },
-    animate: true
+    animate: true,
+    isEnemy: true
 });
 
 const championImage = new Image();
@@ -339,7 +340,7 @@ document.querySelectorAll("button").forEach(button => {
         champion.attack({
             attack: {
                 // names: Tackle,
-                // damage: 10,
+                damage: 10,
                 // type: normal
             },
             recipient : firsrboss
