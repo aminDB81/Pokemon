@@ -1,5 +1,9 @@
+* {
+  font-family: 'Press Start 2P', cursive;
+}
+
 body {
-  background-color: dimgray;
+  background-color: #a4b0be;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -17,4 +21,44 @@ body {
   display: inline-block;
   position: relative;
   
+}
+
+.attack {
+  background-color: #686de0;
+  border-top: 6px solid rgb(58, 53, 53);
+  width: 1120px;
+  height: 115px;
+  position: absolute;
+  bottom: 4px;
+  display: flex;
+  bottom: 0;
+}
+div h1 {
+  margin: 0;
+}
+.attack-option {
+  width: 66.66%;
+  display: grid;
+  grid-template-columns: repeat(2 , 1fr);
+}
+
+.text{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33.33%;
+  border-left: 4px solid rgb(107, 93, 93);
+}
+.attack-option button {
+  border: 0;
+  background-color: #f6e58d;
+  cursor: pointer;
+  transition: all 0.4s;
+  
+}
+.attack-option :nth-child(1){
+  border-right: 4px solid rgb(107, 93, 93);
+}
+.attack-option button:hover {
+  background-color: #eee8cb;
 }
