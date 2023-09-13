@@ -2,6 +2,7 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
 canvas.width = 1120;
 canvas.height = 576
+
 const collisionMap = []
 for (let i = 0; i < collision.length; i += 140) {
     collisionMap.push(collision.slice(i, 140 + i))
@@ -127,7 +128,7 @@ const battle = {
 }
 // Specifying the width, height and position of the character
 function animate() {
-    window.requestAnimationFrame(animate)
+    const animationId =  window.requestAnimationFrame(animate)
     background.draw();
     battlezone.forEach(battlezones => {
         battlezones.draw()
@@ -156,6 +157,21 @@ function animate() {
             })
             ) {
                 console.log('activate a battle');
+                window.cancelAnimationFrame(animationId);
+                gsap.to("#overLapingDiv", {
+                    opacity : 1 ,
+                    repeat : 3,
+                    yoyo : true, 
+                    duration : 0.4,
+                    onComplete(){
+                        gsap.to("#overLapingDiv", {
+                            opacity: 1,
+                        } )
+                        // active a new animation loop
+                        animateBattle();
+                    }
+                })
+                
                 battlezone.initiated = true;
                 break
             }
@@ -263,7 +279,8 @@ function animate() {
             })
     }
 }
-animate()
+animate();
+
 
 //  Specifying specific keys for character movement
 let lastKey = "";
