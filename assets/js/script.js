@@ -142,7 +142,7 @@ function animate() {
     player.draw();
 
     let moving = true
-    player.moving = false;
+    player.animate = false;
 
     if (battle.initiated) return
 
@@ -186,7 +186,7 @@ function animate() {
 
 
     if (keys.w.pressed && lastKey === "w") {
-        player.moving = true;
+        player.animate = true;
         player.image = player.sprites.up
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -210,7 +210,7 @@ function animate() {
                 movables.position.y += 4
             })
     } else if (keys.a.pressed && lastKey === "a") {
-        player.moving = true;
+        player.animate = true;
         player.image = player.sprites.left
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -235,7 +235,7 @@ function animate() {
                 movables.position.x += 4
             })
     } else if (keys.s.pressed && lastKey === "s") {
-        player.moving = true;
+        player.animate = true;
         player.image = player.sprites.down;
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -260,7 +260,7 @@ function animate() {
                 movables.position.y -= 4
             })
     } else if (keys.d.pressed && lastKey === "d") {
-        player.moving = true;
+        player.animate = true;
         player.image = player.sprites.right
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i]
@@ -296,10 +296,37 @@ const BattleBackground = new Sprite({
     ,
     image: BattleBackgroundImage
 })
+const firstbosImage = new Image();
+firstbosImage.src = "assets/img/Idle.png";
+const firsrboss = new Sprite({position : {
+    x : 725 ,
+    y : 150
+},
+image: firstbosImage ,
+frames : {
+    max: 5
+},
+animate : true
+});
+
+const championImage = new Image();
+championImage.src = "assets/img/embySprite.png";
+const champion = new Sprite({position : {
+    x : 325 ,
+    y : 360
+},
+image: championImage ,
+frames : {
+    max: 4
+},
+animate : true
+});
 
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
+    firsrboss.draw();
+    champion.draw();
     console.log('animation battle');
 
 }
