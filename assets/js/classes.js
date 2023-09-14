@@ -61,7 +61,10 @@ class Sprite {
         document.querySelector("#attack-text-box").innerHTML = this.name + " used " + attack.name;
         const textbox = document.getElementById("attack-text-box");
         textbox.addEventListener("click", () => {
-            textbox.style.display = "none";
+            if(queue.length > 0) {
+                queue[0]()
+                queue.shift()
+            } else textbox.style.display = "none";
         });
         let helthBar = "#EnemyHelthBar"
         if (this.isEnemy) {

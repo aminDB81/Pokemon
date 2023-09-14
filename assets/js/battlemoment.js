@@ -52,7 +52,7 @@ function animateBattle() {
 
 }
 animateBattle()
-
+const queue = []
 document.querySelectorAll("#Tackle").forEach(button => {
     button.addEventListener("click", () => {
         champion.attack({
@@ -62,6 +62,17 @@ document.querySelectorAll("#Tackle").forEach(button => {
                 type: "normal"
             },
             recipient: firsrboss
+        })
+        queue.push(() => {
+            firsrboss.attack({
+                attack: {
+                    name: "Fireball",
+                    damage: 20,
+                    type: "Fire"
+                },
+                recipient: champion,
+                renderedSprites
+            })
         })
     })
 });
@@ -75,6 +86,16 @@ document.querySelectorAll("#FireBall").forEach(button => {
             },
             recipient: firsrboss,
             renderedSprites
+        })
+        queue.push(() => {
+            firsrboss.attack({
+                attack: {
+                    name: "Tackle",
+                    damage: 10,
+                    type: "normal"
+                },
+                recipient: champion
+            })
         })
     })
 });
