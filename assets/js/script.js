@@ -321,12 +321,16 @@ const champion = new Sprite({
     animate: true
 });
 
+const renderedSprites = [firsrboss , champion]
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
-    firsrboss.draw();
-    champion.draw();
     console.log('animation battle');
+
+    renderedSprites.forEach((sprite) => {
+        sprite.draw()
+    })
 
 }
 animateBattle()
@@ -348,10 +352,11 @@ document.querySelectorAll("#FireBall").forEach(button => {
         champion.attack({
             attack: {
                 name: "Fireball",
-                damage: 30,
+                damage: 20,
                 type: "Fire"
             },
-            recipient: firsrboss
+            recipient: firsrboss,
+            renderedSprites
         })
     })
 });

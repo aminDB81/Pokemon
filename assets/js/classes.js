@@ -5,7 +5,8 @@ class Sprite {
         frames = { max: 1 },
         sprites,
         animate = false,
-        isEnemy = false
+        isEnemy = false,
+        rotation = 0
     }) {
         this.position = position;
         this.image = image;
@@ -19,10 +20,14 @@ class Sprite {
         this.opacity = 1;
         this.helth = 100;
         this.isEnemy = isEnemy
+        this.rotation = rotation
     }
 
     draw() {
         c.save()
+        c.translate(this.position.x + this.width / 2, this.position.y + this.height / 2)
+        c.rotate(this.rotation)
+        c.translate(-this.position.x - this.width / 2, -this.position.y - this.height / 2)
         c.globalAlpha = this.opacity
         c.drawImage(
             this.image,
@@ -49,14 +54,86 @@ class Sprite {
         }
 
     }
-    attack({ attack, recipient }) {
+    attack({ attack, recipient, renderedSprites }) {
+        let helthBar = "#EnemyHelthBar"
+        if (this.isEnemy) {
+            helthBar = "#ChampionHelthBar"
+        }
+        let rotation = 1
+        if (this.isEnemy) {
+            rotation = -2.2
+        }
+        this.helth -= attack.damage
         switch (attack.name) {
 
             case "Fireball":
+                const fireballImage = new Image()
+                fireballImage.src = "assets/img/fireball.png"
+                const fireball = new Sprite({
+                    position: {
+                        x: this.position.x,
+                        y: this.position.y
+                    },
+                    image: fireballImage,
+                    frames: {
+                        max: 4
+                    },
 
+                    animate: true,
+                    rotation
+                })
 
-
-            
+                // renderedSprites.push(fireball);
+                renderedSprites.splice(1, 0, fireball)
+                if (this.isEnemy) {
+                    gsap.to(fireball.position, {
+                        x: recipient.position.x + 35,
+                        y: recipient.position.y + 10,
+                        onComplete: () => {
+                            gsap.to(helthBar, {
+                                width: this.helth - attack.damage + "%"
+                            })
+                            gsap.to(recipient.position, {
+                                x: recipient.position.x + 10,
+                                yoyo: true,
+                                repeat: 4,
+                                duration: 0.08
+                            })
+    
+                            gsap.to(recipient, {
+                                opacity: 0,
+                                repeat: 5,
+                                yoyo: true,
+                                duration: 0.08
+                            })
+                            renderedSprites.splice(1, 1)
+                        }
+                    })
+                } else {
+                    gsap.to(fireball.position, {
+                        x: recipient.position.x + 35,
+                        y: recipient.position.y + 45,
+                        onComplete: () => {
+                            gsap.to(helthBar, {
+                                width: this.helth - attack.damage + "%"
+                            })
+                            gsap.to(recipient.position, {
+                                x: recipient.position.x + 10,
+                                yoyo: true,
+                                repeat: 4,
+                                duration: 0.08
+                            })
+    
+                            gsap.to(recipient, {
+                                opacity: 0,
+                                repeat: 5,
+                                yoyo: true,
+                                duration: 0.08
+                            })
+                            renderedSprites.splice(1, 1)
+                        }
+                    })
+                }
                 break;
 
 
@@ -64,17 +141,14 @@ class Sprite {
             case "Tackle":
                 const tl = gsap.timeline();
 
-                this.helth -= attack.damage
+
 
                 let movementDistance = 20;
                 if (this.isEnemy) {
                     movementDistance = -20
                 }
 
-                let helthBar = "#EnemyHelthBar"
-                if (this.isEnemy) {
-                    helthBar = "#ChampionHelthBar"
-                }
+
 
                 tl.to(this.position, {
                     x: this.position.x - movementDistance * 2
