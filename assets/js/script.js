@@ -15,10 +15,6 @@ for (let i = 0; i < battlezoneData.length; i += 140) {
 }
 console.log(battlezonemap);
 
-
-
-
-
 const boundaries = []
 const offset = {
     x: -445,
@@ -335,18 +331,30 @@ function animateBattle() {
 }
 animateBattle()
 
-document.querySelectorAll("button").forEach(button => {
+document.querySelectorAll("#Tackle").forEach(button => {
     button.addEventListener("click", () => {
         champion.attack({
             attack: {
-                // names: Tackle,
+                name: "Tackle",
                 damage: 10,
-                // type: normal
+                type: "normal"
             },
-            recipient : firsrboss
+            recipient: firsrboss
         })
     })
-})
+});
+document.querySelectorAll("#FireBall").forEach(button => {
+    button.addEventListener("click", () => {
+        champion.attack({
+            attack: {
+                name: "Fireball",
+                damage: 30,
+                type: "Fire"
+            },
+            recipient: firsrboss
+        })
+    })
+});
 //  Specifying specific keys for character movement
 let lastKey = "";
 window.addEventListener("keydown", (e) => {

@@ -107,3 +107,7 @@ h3 {
   height: 5px;
   background-color: #27ae60;
 }
+
+.main-section {
+  z-index: 10;
+}

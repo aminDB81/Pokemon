@@ -5,8 +5,8 @@ class Sprite {
         frames = { max: 1 },
         sprites,
         animate = false,
-        isEnemy = false 
-        }) {
+        isEnemy = false
+    }) {
         this.position = position;
         this.image = image;
         this.frames = { ...frames, val: 0, elapsed: 0 };
@@ -49,48 +49,66 @@ class Sprite {
         }
 
     }
-    attack({ attack, damage, recipient }) {
-        const tl = gsap.timeline();
+    attack({ attack, recipient }) {
+        switch (attack.name) {
 
-        this.helth = this.helth - attack.damage
+            case "Fireball":
 
-        let movementDistance = 20;
-        if (this.isEnemy) {
-            movementDistance = -20
+
+
+            
+                break;
+
+
+
+            case "Tackle":
+                const tl = gsap.timeline();
+
+                this.helth -= attack.damage
+
+                let movementDistance = 20;
+                if (this.isEnemy) {
+                    movementDistance = -20
+                }
+
+                let helthBar = "#EnemyHelthBar"
+                if (this.isEnemy) {
+                    helthBar = "#ChampionHelthBar"
+                }
+
+                tl.to(this.position, {
+                    x: this.position.x - movementDistance * 2
+                }).to(this.position, {
+                    x: this.position.x + 40,
+                    duration: 0.3,
+                    onComplete: () => {
+                        //enemy get hit
+                        gsap.to(helthBar, {
+                            width: this.helth - attack.damage + "%"
+                        })
+                        gsap.to(recipient.position, {
+                            x: recipient.position.x + 10,
+                            yoyo: true,
+                            repeat: 4,
+                            duration: 0.08
+                        })
+
+                        gsap.to(recipient, {
+                            opacity: 0,
+                            repeat: 5,
+                            yoyo: true,
+                            duration: 0.08
+                        })
+                    }
+                }).to(this.position, {
+                    x: this.position.x
+                });
+                break;
         }
 
-        let helthBar = "#EnemyHelthBar"
-        if (this.isEnemy) {
-            helthBar = "#ChampionHelthBar"
-        }
 
-        tl.to(this.position, {
-            x: this.position.x - movementDistance * 2
-        }).to(this.position, {
-            x: this.position.x + 40,
-            duration: 0.3,
-            onComplete: () => {
-                //enemy get hit
-                gsap.to(helthBar, {
-                    width: this.helth - attack.damage + "%"
-                })
-                gsap.to(recipient.position, {
-                    x: recipient.position.x + 10,
-                    yoyo: true,
-                    repeat: 4,
-                    duration: 0.08
-                })
 
-                gsap.to(recipient, {
-                    // opacity: 0,
-                    repeat: 5,
-                    yoyo: true,
-                    duration: 0.08
-                })
-            }
-        }).to(this.position, {
-            x: this.position.x
-        });
+
     }
 }
 
