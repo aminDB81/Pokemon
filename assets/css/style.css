@@ -111,3 +111,19 @@ h3 {
 .main-section {
   z-index: 10;
 }
+.attack-text {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #f6e58d;
+  padding: 10px;
+  width: 64.66%;
+  display: none;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+.attack-text:hover {
+  background-color: #eee8cb;
+}
