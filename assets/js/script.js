@@ -1,3 +1,14 @@
+function alerts() {
+    alert("hello👋👋👋")
+    alert("Welcome to the pokemon game 😉😉")
+    alert("You can find the battle place in the south of this island 🧭🧭")
+    alert("When you get there, you just need to move here and there to activate the battle 😁😁")
+    alert("Make sure that your keyboard language is Englis 🤖🤖")
+    alert("You can move with W , A , S , D button ⌨️⌨️")
+    alert("good luck my frien ✌️✌️")
+}
+alerts()
+
 // Get the canvas and its 2D rendering context
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
