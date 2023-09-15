@@ -1,5 +1,8 @@
+// Load the battle background image
 const BattleBackgroundImage = new Image();
 BattleBackgroundImage.src = "assets/img/BattleBackground.png";
+
+// Create a sprite for the battle background
 const BattleBackground = new Sprite({
     position: {
         x: 0,
@@ -15,6 +18,7 @@ let renderedSprites
 let battleanimationId
 let queue
 
+// Function to initialize a battle
 function initBattle() {
     document.querySelector("#user").style.display = "block"
     document.querySelector("#dialogue").style.display = "none"
@@ -23,7 +27,7 @@ function initBattle() {
     document.querySelector("#attacksBox").replaceChildren()
 
 
-
+    
     firsrboss = new Monster(monsters.firsrboss);
     champion = new Monster(monsters.champion);
     renderedSprites = [firsrboss, champion];
@@ -101,6 +105,7 @@ function initBattle() {
     });
 }
 
+// Function to animate the battle
 function animateBattle() {
     battleanimationId = window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
@@ -116,7 +121,7 @@ animate()
 
 
 
-
+// Event listener for dialogue box click to progress battle actions
 document.querySelector("#dialogue").addEventListener("click", (e) => {
     if (queue.length > 0) {
         queue[0]();

@@ -1,4 +1,5 @@
 
+// Class to represent a Sprite
 class Sprite {
     constructor({
         position,
@@ -22,6 +23,7 @@ class Sprite {
         this.rotation = rotation
     }
 
+     // Draw the sprite
     draw() {
         c.save()
         c.translate(this.position.x + this.width / 2, this.position.y + this.height / 2)
@@ -55,7 +57,10 @@ class Sprite {
     }
 }
 
+// Class to represent a Monster, extending the Sprite class
 class Monster extends Sprite {
+
+     // Constructor for Monster class
     constructor({
         position,
         image,
@@ -81,6 +86,7 @@ class Monster extends Sprite {
             this.attacks = attacks
     }
 
+     // Handle fainting of the monster
     faint() {
         document.querySelector("#dialogue").style.display = "block";
         document.querySelector("#dialogue").innerHTML = "The " + this.name + " Was Defeated"
@@ -95,6 +101,7 @@ class Monster extends Sprite {
     }
 
     attack({ attack, recipient, renderedSprites }) {
+        // Handle an attack from the monster
         document.querySelector("#dialogue").style.display = "block";
         document.querySelector("#dialogue").innerHTML = this.name + " used " + attack.name
         let helthBar = "#EnemyHelthBar"
@@ -218,6 +225,7 @@ class Monster extends Sprite {
     }
 }
 
+// Class to represent a Boundary
 class Boundary {
     static width = 64
     static height = 64
@@ -226,6 +234,7 @@ class Boundary {
         this.width = 64
         this.height = 64
     }
+    // Draw the boundary
     draw() {
         c.fillStyle = "rgba(255 , 0 , 0 , 0)"
         c.fillRect(this.position.x, this.position.y, this.width, this.height)

@@ -1,3 +1,4 @@
+// Define an object to store different attack information
 const attacks = {
     Tackle: {
         name: "Tackle",

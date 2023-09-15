@@ -1,9 +1,12 @@
+// Load image for the champion
 const championImage = new Image();
 championImage.src = "assets/img/embySprite.png";
 
+// Load image for the first boss
 const firstbosImage = new Image();
 firstbosImage.src = "assets/img/Idle.png";
 
+// Define monster objects
 const monsters = {
     champion: {
         position: {

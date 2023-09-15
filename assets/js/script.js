@@ -1,23 +1,34 @@
+// Get the canvas and its 2D rendering context
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d")
+
+// Set canvas width and height
 canvas.width = 1120;
 canvas.height = 576
 
+// Initialize arrays for collision map and battle zone map
 const collisionMap = []
+const battlezonemap = []
+
+// Split collision data into chunks and push into collisionMap
 for (let i = 0; i < collision.length; i += 140) {
     collisionMap.push(collision.slice(i, 140 + i))
 }
 
-const battlezonemap = []
+// Split battle zone data into chunks and push into battlezonemap
 for (let i = 0; i < battlezoneData.length; i += 140) {
     battlezonemap.push(battlezoneData.slice(i, 140 + i))
 }
 
+// Initialize arrays for boundaries and battle zones
 const boundaries = []
+const battlezone = []
 const offset = {
     x: -445,
     y: -525
 }
+
+// Create boundaries based on collisionMap
 collisionMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
         if (symbol === 913)
@@ -32,7 +43,7 @@ collisionMap.forEach((row, i) => {
 
 });
 
-const battlezone = []
+// Create battle zones based on battlezonemap
 battlezonemap.forEach((row, i) => {
     row.forEach((symbol, j) => {
         if (symbol === 913)
@@ -47,7 +58,9 @@ battlezonemap.forEach((row, i) => {
 
 });
 
+// Fill the canvas with a solid color
 c.fillRect(0, 0, canvas.width, canvas.height)
+// Load images for various game elements
 const image = new Image();
 image.src = "assets/img/Pokemon style game.png"
 
@@ -63,7 +76,7 @@ playerLeftImage.src = "assets/img/playerLeft.png"
 const playerRightImage = new Image();
 playerRightImage.src = "assets/img/playerRight.png"
 
-
+// Create a sprite for the player character
 const player = new Sprite({
     position: {
         x: 428,
@@ -90,6 +103,7 @@ const background = new Sprite({
 
 });
 
+// Initialize keys and movable elements
 const keys = {
     w: {
         pressed: false
@@ -105,6 +119,7 @@ const keys = {
     },
 }
 
+// Function to check for rectangular collision
 const movables = [background, ...boundaries, ...battlezone]
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
@@ -114,16 +129,21 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
         && rectangle1.position.y + rectangle1.height >= rectangle2.position.y)
 }
 
+// Store the battle initiation state
 const battle = {
     initiated: false
 }
-// Specifying the width, height and position of the character
+// Animation loop
 function animate() {
     const animationId = window.requestAnimationFrame(animate)
+
+    // Draw the background and battle zones
     background.draw();
     battlezone.forEach(battlezones => {
         battlezones.draw()
     })
+
+    // Draw the boundaries and player character
     boundaries.forEach(boundary => {
         boundary.draw()
 
@@ -136,7 +156,9 @@ function animate() {
 
     if (battle.initiated) return
 
+    // Check for collision and initiate battle if conditions are met
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        // Handle collision and battle initiation
         for (let i = 0; i < battlezone.length; i++) {
             const battlezones = battlezone[i]
             const overlappingArea =
@@ -189,6 +211,7 @@ function animate() {
         }
     }
 
+    // Handle player movement based on pressed keys
     if (keys.w.pressed && lastKey === "w") {
         player.animate = true;
         player.image = player.sprites.up
@@ -287,6 +310,8 @@ function animate() {
 }
 
 let lastKey = "";
+
+// Event listener for keydown to set key states
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "w":
@@ -308,6 +333,8 @@ window.addEventListener("keydown", (e) => {
     }
 }
 );
+
+// Event listener for keyup to reset key states
 window.addEventListener("keyup", (e) => {
     switch (e.key) {
         case "w":
