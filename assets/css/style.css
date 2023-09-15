@@ -129,3 +129,6 @@ h3 {
 .dialoguebox:hover {
   background-color: #eee8cb;
 }
+#user {
+  display: none;
+}

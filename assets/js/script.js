@@ -7,13 +7,11 @@ const collisionMap = []
 for (let i = 0; i < collision.length; i += 140) {
     collisionMap.push(collision.slice(i, 140 + i))
 }
-console.log(gsap);
 
 const battlezonemap = []
 for (let i = 0; i < battlezoneData.length; i += 140) {
     battlezonemap.push(battlezoneData.slice(i, 140 + i))
 }
-console.log(battlezonemap);
 
 const boundaries = []
 const offset = {
@@ -48,8 +46,6 @@ battlezonemap.forEach((row, i) => {
     });
 
 });
-console.log(battlezone);
-
 
 c.fillRect(0, 0, canvas.width, canvas.height)
 const image = new Image();
@@ -109,7 +105,6 @@ const keys = {
     },
 }
 
-
 const movables = [background, ...boundaries, ...battlezone]
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
@@ -132,7 +127,6 @@ function animate() {
     boundaries.forEach(boundary => {
         boundary.draw()
 
-
     })
 
     player.draw();
@@ -142,32 +136,32 @@ function animate() {
 
     if (battle.initiated) return
 
-
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battlezone.length; i++) {
             const battlezones = battlezone[i]
             const overlappingArea =
-              (Math.min(
-                player.position.x + player.width,
-                battlezones.position.x + battlezones.width
-              ) -
-                Math.max(player.position.x, battlezones.position.x)) *
-              (Math.min(
-                player.position.y + player.height,
-                battlezones.position.y + battlezones.height
-              ) -
-                Math.max(player.position.y, battlezones.position.y))
+                (Math.min(
+                    player.position.x + player.width,
+                    battlezones.position.x + battlezones.width
+                ) -
+                    Math.max(player.position.x, battlezones.position.x)) *
+                (Math.min(
+                    player.position.y + player.height,
+                    battlezones.position.y + battlezones.height
+                ) -
+                    Math.max(player.position.y, battlezones.position.y))
             if (
-              rectangularCollision({
-                rectangle1: player,
-                rectangle2: battlezones
-              }) &&
-              overlappingArea > (player.width * player.height) / 2 &&
-              Math.random() < 0.01
-            )
-             {
-                console.log('activate a battle');
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: battlezones
+                }) &&
+                overlappingArea > (player.width * player.height) / 2 &&
+                Math.random() < 0.01
+            ) {
                 window.cancelAnimationFrame(animationId);
+                audio.Map.stop();
+                audio.initBattle.play()
+                audio.battle.play()
                 gsap.to("#overLapingDiv", {
                     opacity: 1,
                     repeat: 3,
@@ -195,7 +189,6 @@ function animate() {
         }
     }
 
-
     if (keys.w.pressed && lastKey === "w") {
         player.animate = true;
         player.image = player.sprites.up
@@ -211,7 +204,6 @@ function animate() {
                 }
             })
             ) {
-                console.log('closing');
                 moving = false
                 break
             }
@@ -235,7 +227,6 @@ function animate() {
                 }
             })
             ) {
-                console.log('closing');
                 moving = false
                 break
             }
@@ -260,7 +251,6 @@ function animate() {
                 }
             })
             ) {
-                console.log('closing');
                 moving = false
                 break
             }
@@ -285,7 +275,6 @@ function animate() {
                 }
             })
             ) {
-                console.log('closing');
                 moving = false
                 break
             }
@@ -296,10 +285,7 @@ function animate() {
             })
     }
 }
-// animate();f
 
-
-//  Specifying specific keys for character movement
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
@@ -340,3 +326,11 @@ window.addEventListener("keyup", (e) => {
 }
 );
 
+let clicked = false
+addEventListener("click", () => {
+
+    if (!clicked) {
+        audio.Map.play();
+        clicked = true
+    }
+})

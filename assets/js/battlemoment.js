@@ -58,6 +58,7 @@ function initBattle() {
                                 opacity: 0
                             })
                             battle.initiated = false
+                            audio.Map.play()
                         }
                     })
                 })
@@ -84,7 +85,8 @@ function initBattle() {
                                 gsap.to("#overLapingDiv", {
                                     opacity: 0
                                 })
-                                battle.initiated = false
+                                battle.initiated = false;
+                                audio.Map.play()
                             }
                         })
                     })
@@ -102,15 +104,15 @@ function initBattle() {
 function animateBattle() {
     battleanimationId = window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
-    console.log(battleanimationId);
 
     renderedSprites.forEach((sprite) => {
         sprite.draw()
     })
 
 }
-initBattle()
-animateBattle()
+animate()
+// initBattle()
+// animateBattle()
 
 
 

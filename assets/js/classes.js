@@ -1,6 +1,6 @@
 
 class Sprite {
-    constructor({ 
+    constructor({
         position,
         image,
         frames = { max: 1 },
@@ -68,17 +68,17 @@ class Monster extends Sprite {
         attacks
     }) {
         super({
-        position,
-        image,
-        frames,
-        sprites,
-        animate,
-        rotation,
+            position,
+            image,
+            frames,
+            sprites,
+            animate,
+            rotation,
         })
         this.helth = 100;
         this.isEnemy = isEnemy
         this.name = name,
-        this.attacks = attacks
+            this.attacks = attacks
     }
 
     faint() {
@@ -88,9 +88,11 @@ class Monster extends Sprite {
             y: this.position.y + 10
         })
         gsap.to(this, {
-            opacity : 0
+            opacity: 0
         })
-        }
+        audio.battle.stop()
+        audio.victory.play()
+    }
 
     attack({ attack, recipient, renderedSprites }) {
         document.querySelector("#dialogue").style.display = "block";
@@ -107,6 +109,7 @@ class Monster extends Sprite {
         switch (attack.name) {
 
             case "Fireball":
+                audio.initFireball.play()
                 const fireballImage = new Image()
                 fireballImage.src = "assets/img/fireball.png"
                 const fireball = new Sprite({
@@ -122,14 +125,13 @@ class Monster extends Sprite {
                     animate: true,
                     rotation
                 })
-
-                // renderedSprites.push(fireball);
                 renderedSprites.splice(1, 0, fireball)
                 if (this.isEnemy) {
                     gsap.to(fireball.position, {
                         x: recipient.position.x + 35,
                         y: recipient.position.y + 10,
                         onComplete: () => {
+                            audio.fireballHit.play()
                             gsap.to(helthBar, {
                                 width: recipient.helth - attack.damage + "%"
                             })
@@ -154,6 +156,7 @@ class Monster extends Sprite {
                         x: recipient.position.x + 35,
                         y: recipient.position.y + 45,
                         onComplete: () => {
+                            audio.fireballHit.play()
                             gsap.to(helthBar, {
                                 width: recipient.helth - attack.damage + "%"
                             })
@@ -178,16 +181,10 @@ class Monster extends Sprite {
 
             case "Tackle":
                 const tl = gsap.timeline();
-
-
-
                 let movementDistance = 20;
                 if (this.isEnemy) {
                     movementDistance = -20
                 }
-
-
-
                 tl.to(this.position, {
                     x: this.position.x - movementDistance * 2
                 }).to(this.position, {
@@ -195,6 +192,7 @@ class Monster extends Sprite {
                     duration: 0.3,
                     onComplete: () => {
                         //enemy get hit
+                        audio.tackleHit.play()
                         gsap.to(helthBar, {
                             width: recipient.helth - attack.damage + "%"
                         })
@@ -220,7 +218,6 @@ class Monster extends Sprite {
     }
 }
 
-
 class Boundary {
     static width = 64
     static height = 64
@@ -230,7 +227,7 @@ class Boundary {
         this.height = 64
     }
     draw() {
-        c.fillStyle = "rgba(255 , 0 , 0 , 0.2)"
+        c.fillStyle = "rgba(255 , 0 , 0 , 0)"
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }

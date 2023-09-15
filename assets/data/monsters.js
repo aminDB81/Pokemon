@@ -5,7 +5,7 @@ const firstbosImage = new Image();
 firstbosImage.src = "assets/img/Idle.png";
 
 const monsters = {
-    champion : {
+    champion: {
         position: {
             x: 325,
             y: 360
@@ -18,9 +18,9 @@ const monsters = {
         },
         animate: true,
         name: "Champion",
-        attacks: [attacks.Tackle , attacks.Fireball]
-    } , 
-    firsrboss : {
+        attacks: [attacks.Tackle, attacks.Fireball]
+    },
+    firsrboss: {
         position: {
             x: 700,
             y: 150
@@ -34,6 +34,6 @@ const monsters = {
         animate: true,
         isEnemy: true,
         name: "Enemy",
-        attacks: [attacks.Tackle , attacks.Fireball]
+        attacks: [attacks.Tackle, attacks.Fireball]
     }
 }
