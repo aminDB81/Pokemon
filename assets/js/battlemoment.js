@@ -8,39 +8,16 @@ const BattleBackground = new Sprite({
     ,
     image: BattleBackgroundImage
 })
-const firstbosImage = new Image();
-firstbosImage.src = "assets/img/Idle.png";
-const firsrboss = new Sprite({
-    position: {
-        x: 700,
-        y: 150
-    },
-    image: firstbosImage,
-    frames: {
-        max: 5
-    },
-    animate: true,
-    isEnemy: true,
-    name: "Enemy"
-});
 
-const championImage = new Image();
-championImage.src = "assets/img/embySprite.png";
-const champion = new Sprite({
-    position: {
-        x: 325,
-        y: 360
-    },
-    image: championImage,
-    frames: {
-        max: 4
-    },
-    animate: true,
-    name: "Champion"
-});
+const firsrboss = new Sprite(monsters.firsrboss);
 
-const renderedSprites = [firsrboss , champion]
 
+const champion = new Sprite(monsters.champion);
+
+const renderedSprites = [firsrboss , champion];
+const button = document.createElement("button");
+button.innerHTML = "Fireball"
+document.querySelector("#attacksBox").append(button)
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
