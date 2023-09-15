@@ -9,15 +9,17 @@ const BattleBackground = new Sprite({
     image: BattleBackgroundImage
 })
 
-const firsrboss = new Sprite(monsters.firsrboss);
-
-
-const champion = new Sprite(monsters.champion);
-
+const firsrboss = new Monster(monsters.firsrboss);
+const champion = new Monster(monsters.champion);
 const renderedSprites = [firsrboss , champion];
-const button = document.createElement("button");
-button.innerHTML = "Fireball"
+
+champion.attacks.forEach(attack => {
+    const button = document.createElement("button");
+button.innerHTML = attack.name
 document.querySelector("#attacksBox").append(button)
+})
+
+
 function animateBattle() {
     window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
@@ -40,13 +42,27 @@ document.querySelectorAll("button").forEach(button => {
             recipient: firsrboss,
             renderedSprites
         })
+
+        if (firsrboss.helth <= 0) {
+            queue.push(() => {
+                firsrboss.faint()
+            })
+            return
+        }
+
+        const randowAttack =  firsrboss.attacks[Math.floor(Math.random() * champion.attacks.length)]
         queue.push(() => {
             firsrboss.attack({
-                attack: attacks.Tackle,
+                attack: randowAttack,
                 recipient: champion,
                 renderedSprites
             })
         })
+    })
+    button.addEventListener("mouseenter" , (e) => {
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        document.querySelector("#attackType").innerHTML = selectedAttack.type
+        document.querySelector("#attackType").style.color = selectedAttack.color
     })
 });
 document.querySelector("#dialogue").addEventListener("click" , (e) => {

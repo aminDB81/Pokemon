@@ -30,6 +30,6 @@ const monsters = {
         animate: true,
         isEnemy: true,
         name: "Enemy",
-        attacks: [attacks.Tackle]
+        attacks: [attacks.Tackle , attacks.Fireball]
     }
 }

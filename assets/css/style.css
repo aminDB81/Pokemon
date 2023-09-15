@@ -43,6 +43,7 @@ div h1 {
 }
 
 .text{
+  background-color: #D980FA;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,13 +1,12 @@
 
 class Sprite {
-    constructor({ position,
+    constructor({ 
+        position,
         image,
         frames = { max: 1 },
         sprites,
         animate = false,
-        isEnemy = false,
         rotation = 0,
-        name
     }) {
         this.position = position;
         this.image = image;
@@ -19,10 +18,7 @@ class Sprite {
         this.animate = animate;
         this.sprites = sprites;
         this.opacity = 1;
-        this.helth = 100;
-        this.isEnemy = isEnemy
         this.rotation = rotation
-        this.name = name
     }
 
     draw() {
@@ -56,6 +52,34 @@ class Sprite {
         }
 
     }
+}
+
+class Monster extends Sprite {
+    constructor({
+        position,
+        image,
+        frames = { max: 1 },
+        sprites,
+        animate = false,
+        rotation = 0,
+        isEnemy = false,
+        name,
+        attacks
+    }) {
+        super({
+        position,
+        image,
+        frames,
+        sprites,
+        animate,
+        rotation,
+        })
+        this.helth = 100;
+        this.isEnemy = isEnemy
+        this.name = name,
+        this.attacks = attacks
+    }
+    
     attack({ attack, recipient, renderedSprites }) {
         document.querySelector("#dialogue").style.display = "block";
         document.querySelector("#dialogue").innerHTML = this.name + " used " + attack.name
@@ -103,7 +127,7 @@ class Sprite {
                                 repeat: 4,
                                 duration: 0.08
                             })
-    
+
                             gsap.to(recipient, {
                                 opacity: 0,
                                 repeat: 5,
@@ -127,7 +151,7 @@ class Sprite {
                                 repeat: 4,
                                 duration: 0.08
                             })
-    
+
                             gsap.to(recipient, {
                                 opacity: 0,
                                 repeat: 5,
@@ -139,8 +163,6 @@ class Sprite {
                     })
                 }
                 break;
-
-
 
             case "Tackle":
                 const tl = gsap.timeline();
@@ -183,10 +205,6 @@ class Sprite {
                 });
                 break;
         }
-
-
-
-
     }
 }
 
