@@ -37,13 +37,14 @@ const queue = []
 document.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", (e) => {
         const selectedAttack = attacks[e.currentTarget.innerHTML]
+        
         champion.attack({
             attack: selectedAttack,
             recipient: firsrboss,
             renderedSprites
         })
 
-        if (firsrboss.helth <= 0) {
+        if (firsrboss.helth <= 15) {
             queue.push(() => {
                 firsrboss.faint()
             })
@@ -57,6 +58,11 @@ document.querySelectorAll("button").forEach(button => {
                 recipient: champion,
                 renderedSprites
             })
+            if (champion.helth <= 15) {
+                queue.push(() => {
+                    champion.faint()
+                })
+            }
         })
     })
     button.addEventListener("mouseenter" , (e) => {

@@ -79,7 +79,18 @@ class Monster extends Sprite {
         this.name = name,
         this.attacks = attacks
     }
-    
+
+    faint() {
+        document.querySelector("#dialogue").style.display = "block";
+        document.querySelector("#dialogue").innerHTML = "The " + this.name + " Was Defeated"
+        gsap.to(this.position, {
+            y: this.position.y + 40
+        })
+        gsap.to(this, {
+            opacity : 0
+        })
+        }
+
     attack({ attack, recipient, renderedSprites }) {
         document.querySelector("#dialogue").style.display = "block";
         document.querySelector("#dialogue").innerHTML = this.name + " used " + attack.name
@@ -91,7 +102,7 @@ class Monster extends Sprite {
         if (this.isEnemy) {
             rotation = -2.2
         }
-        this.helth -= attack.damage
+        recipient.helth -= attack.damage
         switch (attack.name) {
 
             case "Fireball":
@@ -119,7 +130,7 @@ class Monster extends Sprite {
                         y: recipient.position.y + 10,
                         onComplete: () => {
                             gsap.to(helthBar, {
-                                width: this.helth - attack.damage + "%"
+                                width: recipient.helth - attack.damage + "%"
                             })
                             gsap.to(recipient.position, {
                                 x: recipient.position.x + 10,
@@ -143,7 +154,7 @@ class Monster extends Sprite {
                         y: recipient.position.y + 45,
                         onComplete: () => {
                             gsap.to(helthBar, {
-                                width: this.helth - attack.damage + "%"
+                                width: recipient.helth - attack.damage + "%"
                             })
                             gsap.to(recipient.position, {
                                 x: recipient.position.x + 10,
@@ -184,7 +195,7 @@ class Monster extends Sprite {
                     onComplete: () => {
                         //enemy get hit
                         gsap.to(helthBar, {
-                            width: this.helth - attack.damage + "%"
+                            width: recipient.helth - attack.damage + "%"
                         })
                         gsap.to(recipient.position, {
                             x: recipient.position.x + 10,
