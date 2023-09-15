@@ -43,7 +43,7 @@ function initBattle() {
                 renderedSprites
             })
 
-            if (firsrboss.helth <= 0) {
+            if (firsrboss.helth <= 15) {
                 queue.push(() => {
                     firsrboss.faint()
                 })

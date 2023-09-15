@@ -296,7 +296,7 @@ function animate() {
             })
     }
 }
-// animate();
+// animate();f
 
 
 //  Specifying specific keys for character movement
