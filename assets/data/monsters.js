@@ -10,7 +10,9 @@ const monsters = {
             x: 325,
             y: 360
         },
-        image: championImage,
+        image: {
+            src: "assets/img/embySprite.png"
+        },
         frames: {
             max: 4
         },
@@ -23,7 +25,9 @@ const monsters = {
             x: 700,
             y: 150
         },
-        image: firstbosImage,
+        image: {
+            src: "assets/img/Idle.png"
+        },
         frames: {
             max: 5
         },

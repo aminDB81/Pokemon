@@ -10,9 +10,9 @@ const BattleBackground = new Sprite({
 })
 
 let firsrboss
-let champion 
+let champion
 let renderedSprites
-let battleanimationId 
+let battleanimationId
 let queue
 
 function initBattle() {
@@ -26,43 +26,44 @@ function initBattle() {
 
     firsrboss = new Monster(monsters.firsrboss);
     champion = new Monster(monsters.champion);
-    renderedSprites = [firsrboss , champion];
+    renderedSprites = [firsrboss, champion];
     queue = []
     champion.attacks.forEach(attack => {
         const button = document.createElement("button");
-    button.innerHTML = attack.name
-    document.querySelector("#attacksBox").append(button)
+        button.innerHTML = attack.name
+        document.querySelector("#attacksBox").append(button)
     })
     document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", (e) => {
             const selectedAttack = attacks[e.currentTarget.innerHTML]
-            
+
             champion.attack({
                 attack: selectedAttack,
                 recipient: firsrboss,
                 renderedSprites
             })
-    
+
             if (firsrboss.helth <= 0) {
                 queue.push(() => {
                     firsrboss.faint()
                 })
-                queue.push( () => {
-                    gsap.to("#overLapingDiv" , {
+                queue.push(() => {
+                    gsap.to("#overLapingDiv", {
                         opacity: 1,
-                        onComplete : () => {
+                        onComplete: () => {
                             cancelAnimationFrame(battleanimationId)
                             animate()
                             document.querySelector("#user").style.display = "none"
-                            gsap.to("#overLapingDiv" , {
+                            gsap.to("#overLapingDiv", {
                                 opacity: 0
                             })
+                            battle.initiated = false
                         }
                     })
                 })
             }
-    
-            const randowAttack =  firsrboss.attacks[Math.floor(Math.random() * champion.attacks.length)]
+
+            const randowAttack = firsrboss.attacks[Math.floor(Math.random() * champion.attacks.length)]
             queue.push(() => {
                 firsrboss.attack({
                     attack: randowAttack,
@@ -73,10 +74,24 @@ function initBattle() {
                     queue.push(() => {
                         champion.faint()
                     })
+                    queue.push(() => {
+                        gsap.to("#overLapingDiv", {
+                            opacity: 1,
+                            onComplete: () => {
+                                cancelAnimationFrame(battleanimationId)
+                                animate()
+                                document.querySelector("#user").style.display = "none"
+                                gsap.to("#overLapingDiv", {
+                                    opacity: 0
+                                })
+                                battle.initiated = false
+                            }
+                        })
+                    })
                 }
             })
         })
-        button.addEventListener("mouseenter" , (e) => {
+        button.addEventListener("mouseenter", (e) => {
             const selectedAttack = attacks[e.currentTarget.innerHTML]
             document.querySelector("#attackType").innerHTML = selectedAttack.type
             document.querySelector("#attackType").style.color = selectedAttack.color
@@ -100,9 +115,9 @@ animateBattle()
 
 
 
-document.querySelector("#dialogue").addEventListener("click" , (e) => {
+document.querySelector("#dialogue").addEventListener("click", (e) => {
     if (queue.length > 0) {
         queue[0]();
         queue.shift();
-    } else e.currentTarget.style.display ="none"
+    } else e.currentTarget.style.display = "none"
 })

@@ -162,7 +162,7 @@ function animate() {
                 rectangle1: player,
                 rectangle2: battlezones
               }) &&
-              overlappingArea > (player.width * player.height) / 1.5 &&
+              overlappingArea > (player.width * player.height) / 2 &&
               Math.random() < 0.01
             )
              {
