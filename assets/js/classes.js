@@ -6,8 +6,7 @@ class Sprite {
         sprites,
         animate = false,
         isEnemy = false,
-        rotation = 0,
-        name
+        rotation = 0
     }) {
         this.position = position;
         this.image = image;
@@ -22,7 +21,6 @@ class Sprite {
         this.helth = 100;
         this.isEnemy = isEnemy
         this.rotation = rotation
-        this.name = name
     }
 
     draw() {
@@ -57,15 +55,6 @@ class Sprite {
 
     }
     attack({ attack, recipient, renderedSprites }) {
-        document.querySelector("#attack-text-box").style.display = "block"
-        document.querySelector("#attack-text-box").innerHTML = this.name + " used " + attack.name;
-        const textbox = document.getElementById("attack-text-box");
-        textbox.addEventListener("click", () => {
-            if(queue.length > 0) {
-                queue[0]()
-                queue.shift()
-            } else textbox.style.display = "none";
-        });
         let helthBar = "#EnemyHelthBar"
         if (this.isEnemy) {
             helthBar = "#ChampionHelthBar"
