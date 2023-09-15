@@ -111,3 +111,19 @@ h3 {
 .main-section {
   z-index: 10;
 }
+.dialoguebox {
+  padding: 10px;
+  position: absolute;
+  width: 65.66%;
+  background-color: #f6e58d;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  transition: all 0.4s;
+}
+.dialoguebox:hover {
+  background-color: #eee8cb;
+}

@@ -304,7 +304,8 @@ const firsrboss = new Sprite({
         max: 5
     },
     animate: true,
-    isEnemy: true
+    isEnemy: true,
+    name: "Enemy"
 });
 
 const championImage = new Image();
@@ -318,7 +319,8 @@ const champion = new Sprite({
     frames: {
         max: 4
     },
-    animate: true
+    animate: true,
+    name: "Champion"
 });
 
 const renderedSprites = [firsrboss , champion]
