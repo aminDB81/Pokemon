@@ -9,68 +9,97 @@ const BattleBackground = new Sprite({
     image: BattleBackgroundImage
 })
 
-const firsrboss = new Monster(monsters.firsrboss);
-const champion = new Monster(monsters.champion);
-const renderedSprites = [firsrboss , champion];
+let firsrboss
+let champion 
+let renderedSprites
+let battleanimationId 
+let queue
 
-champion.attacks.forEach(attack => {
-    const button = document.createElement("button");
-button.innerHTML = attack.name
-document.querySelector("#attacksBox").append(button)
-})
+function initBattle() {
+    document.querySelector("#user").style.display = "block"
+    document.querySelector("#dialogue").style.display = "none"
+    document.querySelector("#EnemyHelthBar").style.width = "100%"
+    document.querySelector("#ChampionHelthBar").style.width = "100%"
+    document.querySelector("#attacksBox").replaceChildren()
 
+
+
+    firsrboss = new Monster(monsters.firsrboss);
+    champion = new Monster(monsters.champion);
+    renderedSprites = [firsrboss , champion];
+    queue = []
+    champion.attacks.forEach(attack => {
+        const button = document.createElement("button");
+    button.innerHTML = attack.name
+    document.querySelector("#attacksBox").append(button)
+    })
+    document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", (e) => {
+            const selectedAttack = attacks[e.currentTarget.innerHTML]
+            
+            champion.attack({
+                attack: selectedAttack,
+                recipient: firsrboss,
+                renderedSprites
+            })
+    
+            if (firsrboss.helth <= 0) {
+                queue.push(() => {
+                    firsrboss.faint()
+                })
+                queue.push( () => {
+                    gsap.to("#overLapingDiv" , {
+                        opacity: 1,
+                        onComplete : () => {
+                            cancelAnimationFrame(battleanimationId)
+                            animate()
+                            document.querySelector("#user").style.display = "none"
+                            gsap.to("#overLapingDiv" , {
+                                opacity: 0
+                            })
+                        }
+                    })
+                })
+            }
+    
+            const randowAttack =  firsrboss.attacks[Math.floor(Math.random() * champion.attacks.length)]
+            queue.push(() => {
+                firsrboss.attack({
+                    attack: randowAttack,
+                    recipient: champion,
+                    renderedSprites
+                })
+                if (champion.helth <= 15) {
+                    queue.push(() => {
+                        champion.faint()
+                    })
+                }
+            })
+        })
+        button.addEventListener("mouseenter" , (e) => {
+            const selectedAttack = attacks[e.currentTarget.innerHTML]
+            document.querySelector("#attackType").innerHTML = selectedAttack.type
+            document.querySelector("#attackType").style.color = selectedAttack.color
+        })
+    });
+}
 
 function animateBattle() {
-    window.requestAnimationFrame(animateBattle)
+    battleanimationId = window.requestAnimationFrame(animateBattle)
     BattleBackground.draw();
-    console.log('animation battle');
+    console.log(battleanimationId);
 
     renderedSprites.forEach((sprite) => {
         sprite.draw()
     })
 
 }
+initBattle()
 animateBattle()
 
-const queue = []
 
-document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", (e) => {
-        const selectedAttack = attacks[e.currentTarget.innerHTML]
-        
-        champion.attack({
-            attack: selectedAttack,
-            recipient: firsrboss,
-            renderedSprites
-        })
 
-        if (firsrboss.helth <= 15) {
-            queue.push(() => {
-                firsrboss.faint()
-            })
-            return
-        }
 
-        const randowAttack =  firsrboss.attacks[Math.floor(Math.random() * champion.attacks.length)]
-        queue.push(() => {
-            firsrboss.attack({
-                attack: randowAttack,
-                recipient: champion,
-                renderedSprites
-            })
-            if (champion.helth <= 15) {
-                queue.push(() => {
-                    champion.faint()
-                })
-            }
-        })
-    })
-    button.addEventListener("mouseenter" , (e) => {
-        const selectedAttack = attacks[e.currentTarget.innerHTML]
-        document.querySelector("#attackType").innerHTML = selectedAttack.type
-        document.querySelector("#attackType").style.color = selectedAttack.color
-    })
-});
 document.querySelector("#dialogue").addEventListener("click" , (e) => {
     if (queue.length > 0) {
         queue[0]();

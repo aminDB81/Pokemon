@@ -145,13 +145,27 @@ function animate() {
 
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         for (let i = 0; i < battlezone.length; i++) {
-            const battlezones = battlezone[i];
-
-            if (rectangularCollision({
+            const battlezones = battlezone[i]
+            const overlappingArea =
+              (Math.min(
+                player.position.x + player.width,
+                battlezones.position.x + battlezones.width
+              ) -
+                Math.max(player.position.x, battlezones.position.x)) *
+              (Math.min(
+                player.position.y + player.height,
+                battlezones.position.y + battlezones.height
+              ) -
+                Math.max(player.position.y, battlezones.position.y))
+            if (
+              rectangularCollision({
                 rectangle1: player,
                 rectangle2: battlezones
-            })
-            ) {
+              }) &&
+              overlappingArea > (player.width * player.height) / 1.5 &&
+              Math.random() < 0.01
+            )
+             {
                 console.log('activate a battle');
                 window.cancelAnimationFrame(animationId);
                 gsap.to("#overLapingDiv", {
@@ -164,6 +178,7 @@ function animate() {
                             opacity: 1,
                             onComplete() {
                                 // active a new animation loop
+                                initBattle()
                                 animateBattle();
                                 gsap.to("#overLapingDiv", {
                                     opacity: 0,
